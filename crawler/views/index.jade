@@ -1,0 +1,20 @@
+extends layout
+
+block content
+   h1 点击按钮获取数据 --- 数据来自于
+      a(href="http://sports.sina.com.cn/nba/1.shtml") 新浪NBA
+   button#btn 点击获取数据
+   p.hint(style="display:none;") 正在获取数据中 ...
+
+   script(src="/javascripts/jquery.js")
+   script.
+     $("#btn").click(function () {
+         $(".hint").show();
+         var newTime = new Date();//获取现在时间
+         $.post("/getNews",function (data) {
+             if(data){
+                 var resTime = (new Date() - newTime)/1000;
+                 $(".hint").html("数据爬取完成,共用时" + resTime +"");
+             }
+         });
+     });
